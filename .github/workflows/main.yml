@@ -1,0 +1,40 @@
+name: MohammedImran
+on:
+  push:
+    branches:
+      - main
+jobs:
+  Testing:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Get Code
+        uses: actions/checkout@v4
+      - name: Install Dependency
+        run: npm ci
+      - name: Lint Code
+        run: npm run lint
+      - name: Test code
+        run: npm run test
+  build:
+    needs: Testing
+    runs-on: ubuntu-latest
+    steps:
+      - name: Get code
+        uses: actions/checkout@v4
+      - name: Install Dependency
+        run: npm ci
+      - name: Build website
+        run: npm run build
+      - name: upload Artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: website
+          path: dist/
+      - name: list the articact
+        run: ls
+  Build:
+    needs: build
+    runs-on: ubuntu-latest
+    steps:
+      - name: Deploying
+        run: echo "Deploying Website"
