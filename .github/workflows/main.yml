@@ -32,7 +32,7 @@ jobs:
           path: dist/
       - name: list the articact
         run: ls
-  Build:
+  Deploy:
     needs: build
     runs-on: ubuntu-latest
     steps:
